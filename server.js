@@ -16,6 +16,8 @@ const bodyParser = require('body-parser')
 // indexRouter variable is going to be set to the router variable in index.js
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/authors')
+const bookRouter = require('./routes/books')
+
 
 
 app.set('view engine', 'ejs')
@@ -38,6 +40,11 @@ app.use('/', indexRouter)
 // /authors
 // /authors/new
 app.use('/authors', authorRouter)
+// Every route inside our bookRouter its going to be preempted to /books path such as
+// /books
+// /books/new
+app.use('/books', bookRouter)
+
 
 
 // We are going to import mongoose to be able to integrate the application with mongodb
