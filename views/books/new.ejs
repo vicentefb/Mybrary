@@ -1,7 +1,6 @@
 <h2> New Book </h2>
-<!-- This form needs to be of the type multipart form to 
-be able to accept files-->
-<form action="/books" method="POST" enctype="multipart/form-data">
+<!-- We are going to be uploading a JSON string which contains the image-->
+<form action="/books" method="POST">
 	<%- include('_form_fields')%>
 	<a href="/books">Cancel</a>
 	<button type="submit">Create</button>

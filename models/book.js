@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
-const path = require('path')
-const coverImageBasePath = 'uploads/bookCovers'
+
 
 // Create a schema which is like a table
 const bookSchema = new mongoose.Schema({
@@ -25,7 +24,11 @@ const bookSchema = new mongoose.Schema({
 		required: true,
 		default: Date.now
 	},
-	coverImageName: {
+	coverImage: {
+		type: Buffer,
+		required: true
+	},
+	coverImageType: {
 		type: String,
 		required: true
 	},
@@ -44,13 +47,11 @@ const bookSchema = new mongoose.Schema({
 // So when we call coverImagePath from books/index.ejs it is going to call the get function
 // We use a normal function to have access to the this property
 bookSchema.virtual('coverImagePath').get(function(){
-	if(this.coverImageName != null){
-		// Return a path
-		// root of our object, uploads/bookCovers, the actual file name
-		return path.join('/', coverImageBasePath, this.coverImageName)
+	if(this.coverImage != null && this.coverImageType != null){
+		// data objects as a source for images takes the buffer data
+		return `data: ${this.coverImageType};charset=utf-8;base64, ${this.coverImage.toString('base64')}`
 	}
 })
 
 // export the schema
 module.exports = mongoose.model('Book', bookSchema)
-module.exports.coverImageBasePath = coverImageBasePath

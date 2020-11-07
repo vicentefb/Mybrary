@@ -1,5 +1,9 @@
 // We are going to use MVC to hold our views folder
 
+// Uploading file (using filepond library through a CDN) to be stored in the database instead of being stored on the server
+// so we can use it with heroku easier. We put that CDN inside of the layouts page because we want it to appear in every single page.
+// Initially, if we uploaded a file and restart the heroku server, it erases everything. 
+
 // Check if we are running on the production environment or not
 // We want to load the variable if we are in the development environment
 if(process.env.NODE_ENV !== 'production'){
