@@ -72,15 +72,95 @@ router.post('/',  async (req, res) => {
 		// We want to save the book
 		// if the book saves correctly we want to redirect to the books page
 		const newBook = await book.save()
-		//res.redirect('books/${newBook.id}')
-		res.redirect('books')
+		res.redirect(`books/${newBook.id}`)
 
 	} catch {
 		renderNewPage(res, book, true)
 	}
 })
 
+// Show Book Route
+router.get('/:id', async (req, res) => {
+	try{
+		// It will populate the author variable inside our Book object with all of the author information
+		const book = await Book.findById(req.params.id).populate('author').exec()
+		res.render('books/show', {book: book})
+	} catch {
+		res.redirect('/')
+	}
+})
+
+// Edit Book Route
+router.get('/:id/edit', async (req, res) => {
+	try{
+		const book = await Book.findById(req.params.id)
+		renderEditPage(res, book)
+	} catch {
+		res.redirect('/')
+	}
+
+	
+})
+
+// Update book
+router.put('/:id',  async (req, res) => {
+	let book 
+
+	try{
+		book = await Book.findById(req.params.id)
+		book.title = req.body.title
+		book.author = req.body.author
+		book.publishDate = new Date(req.body.publishDate)
+		book.pageCount = req.body.pageCount
+		book.description = req.body.description
+		if(req.body.cover != null && req.body.cover !== ''){
+			saveCover(book, req.body.cover)
+		}
+		await book.save()
+		res.redirect(`/books/${book.id}`)
+
+	} catch(err) {
+		console.log(err)
+		if(book != null){
+			renderEditPage(res, book, true)
+		}
+		else{
+			res.redirect('/')
+		}
+		
+	}
+})
+
+// Delete Book Page
+router.delete('/:id', async (req, res) => {
+	let book
+	try {
+		book = await Book.findById(req.params.id)
+		await book.remove()
+		res.redirect('/books')
+	} catch {
+		if(book != null){
+			res.render('books/show', {
+				book: book, 
+				errorMessage: 'Could not remove book'
+			})
+		}
+		else{
+			res.redirect('/')
+		}
+	}
+})
+
+
 async function renderNewPage(res, book, hasError = false){
+	renderFormPage(res, book, `new`, hasError)
+}
+
+async function renderEditPage(res, book, hasError = false){
+	renderFormPage(res, book, `edit`, hasError)
+}
+
+async function renderFormPage(res, book, form, hasError = false){
 	try {
 		const authors = await Author.find({})
 		// We create this book so that when the user modifies it we can populate the fields that are already created
@@ -89,8 +169,15 @@ async function renderNewPage(res, book, hasError = false){
 			authors: authors, 
 			book: book
 		}
-		if (hasError) params.errorMessage = 'Error Creating Book'
-		res.render('books/new', params)
+		if (hasError){
+			if(form === 'edit'){
+				params.errorMessage = 'Error Updating Book'
+			} 
+			else{
+				params.errorMessage = 'Error Creating Book'
+			}
+		}
+		res.render(`books/${form}`, params)
 	} catch {
 		res.redirect('/books')
 	}
