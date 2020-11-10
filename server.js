@@ -15,6 +15,8 @@ const app = express()
 const expressLayouts = require('express-ejs-layouts')
 // Body-parser helps us get data from our server
 const bodyParser = require('body-parser')
+// To use PUT and DELETE requests
+const methodOverride = require('method-override')
 
 // route folder to hold the routes to differnt paths
 // indexRouter variable is going to be set to the router variable in index.js
@@ -30,6 +32,7 @@ app.set('views', __dirname + '/views')
 // Every single layout file will placed inside this layout
 app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
+app.use(methodOverride('_method'))
 // Where our public files are going to be: css, style sheets, javascript files, images
 app.use(express.static('public'))
 
