@@ -1,0 +1,34 @@
+@import 'shared/fonts.css';
+@import 'shared/variables.css';
+@import 'shared/header.css';
+:root {
+	font-family: 'Ubuntu';
+	font-size: 20px;
+	color: var(--color-text-light);
+}
+
+/*select all elements, select all before elements, select all after elements*/
+*, *::before, *::after{
+	box-sizing:border-box;
+}
+
+body {
+	background: linear-gradient(to right, var(--color-background-dark), var(--color-background-light));
+}
+
+.container{
+	max-width: 1200px;
+	/*Equal margin on the left and right*/
+	margin: auto;
+	/*So the content doesn't touch the bottom of the screen*/
+	margin-bottom: 3rem;
+}
+
+.inner-container{
+	margin:0 2rem;
+}
+
+.page-header{
+	font-size: 2rem;
+	font-weight: 500;
+}
