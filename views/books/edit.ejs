@@ -2,6 +2,8 @@
 <!-- We are going to be uploading a JSON string which contains the image-->
 <form action="/books/<%= book.id %>?_method=PUT" method="POST">
 	<%- include('_form_fields')%>
-	<a href="/books">Cancel</a>
-	<button type="submit">Update</button>
+	<div class="form-row form-row-end btn-row">
+		<a class="btn btn-danger" href="/books">Cancel</a>
+		<button class="btn btn-primary" type="submit">Update</button>
+	</div>
 </form>
