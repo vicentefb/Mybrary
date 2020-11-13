@@ -28,3 +28,16 @@ Following the MVC (Model, View, Controller) pattern, Mybrary uses some open sour
    [express]: <http://expressjs.com>
    [Heroku]: <https://www.heroku.com/>
 
+### Folder structure
+```
+.
+├── model                   # Handles data logic and interacts with database
+├── public                  # Contains CSS stylesheets
+├── routes                  # Handles request flow
+├── views                   # Handles data presentation and it is dynamically rendered
+├── .gitignore                  
+├── README.md
+├── package-lock.json
+├── package.json
+└── server.js
+```
