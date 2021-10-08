@@ -1,7 +1,7 @@
 # Mybrary Web Application
 
 Mybrary is a full-stack web application that showcases an online personal library. 
-(https://github.com/vicentefb/Mybrary/blob/master/public/demo.gif)
+![Alt Text](https://github.com/vicentefb/Mybrary/blob/master/public/demo.gif)
 
 ### Build
 
